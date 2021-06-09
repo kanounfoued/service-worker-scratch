@@ -1,0 +1,8 @@
+{
+  "name": "service-worker-scratch",
+  "version": "1.0.0",
+  "description": "build and test the service worker from scratch",
+  "main": "index.js",
+  "author": "@kanounfoued",
+  "license": "MIT"
+}
