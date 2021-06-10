@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Worker</title>
+  </head>
+
+  <style>
+    .custom-input {
+      max-width: 250px;
+    }
+    .custom-input input {
+      width: 100%;
+      padding: 0.5rem 1rem;
+      border-radius: 1rem;
+      outline: none;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .btn {
+      background: none;
+      background-color: dodgerblue;
+      padding: 0.5rem 1rem;
+      color: white;
+      border: none;
+      margin: 0.25rem;
+      cursor: pointer;
+      border-radius: 1rem;
+      outline: none;
+    }
+
+    .btn:disabled {
+      background-color: grey;
+    }
+    .btn:enabled {
+      background-color: dodgerblue;
+    }
+  </style>
+
+  <body>
+    <div class="root">
+      <div class="custom-input">
+        <label for="">Calculate factorial of a number</label>
+        <input
+          type="text"
+          name="number-field"
+          id="number"
+          placeholder="Type here"
+        />
+      </div>
+      <button id="start-btn" class="btn" onclick="">Start worker</button>
+      <button id="stop-btn" class="btn hidden" onclick="">Stop worker</button>
+    </div>
+
+    <script src="js/tutorial.js"></script>
+  </body>
+</html>
