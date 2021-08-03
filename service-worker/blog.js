@@ -33,12 +33,14 @@
       offlineIcon.classList.add("hidden");
       isOnline = true;
       statusValue.textContent = isOnline;
+      sendStatusUpdate(svcWorker);
     });
 
     window.addEventListener("offline", function () {
       offlineIcon.classList.add("hidden");
       isOnline = false;
       statusValue.textContent = isOnline;
+      sendStatusUpdate(svcWorker);
     });
   }
 
@@ -54,6 +56,8 @@
       swRegistration.waiting ||
       swRegistration.active;
 
+    sendStatusUpdate(svcWorker);
+
     /**
      *  INSTALLING :
      *  the server has never been installed, this is the first time.
@@ -64,6 +68,39 @@
     //  Look for any new service worker has been installed.
     navigator.serviceWorker.addEventListener("controllerchange", function () {
       svcWorker = navigator.serviceWorker.controller;
+      sendStatusUpdate(svcWorker);
     });
+
+    // listen to messages sent from the service worker.
+    navigator.serviceWorker.addEventListener("message", onSWMessage);
+  }
+
+  function onSWMessage(e) {
+    const { data } = e;
+
+    if (data.requestStatusUpdate) {
+      console.log(
+        "Receive status udpate request from service worker, responding ..."
+      );
+
+      // e.ports are the ports used to make communication between the page and the service worker.
+      // The e.ports are created using new feature called Channel.
+      sendStatusUpdate(e.ports && e.ports[0]);
+    }
+  }
+
+  function sendStatusUpdate(target) {
+    sendSWMessage({ statusUpdate: { isOnline, isLoggedIn } }, target);
+  }
+
+  // send messages to service worker.
+  function sendSWMessage(msg, target) {
+    if (target) {
+      target.postMessage(msg);
+    } else if (svcWorker) {
+      svcWorker.postMessage(msg);
+    } else {
+      navigator.serviceWorker.controller.postMessage(msg);
+    }
   }
 })();
