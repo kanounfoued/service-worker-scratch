@@ -33,14 +33,14 @@
       offlineIcon.classList.add("hidden");
       isOnline = true;
       statusValue.textContent = isOnline;
-      sendStatusUpdate();
+      sendStatusUpdate(svcWorker);
     });
 
     window.addEventListener("offline", function () {
       offlineIcon.classList.add("hidden");
       isOnline = false;
       statusValue.textContent = isOnline;
-      sendStatusUpdate();
+      sendStatusUpdate(svcWorker);
     });
   }
 
